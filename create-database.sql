@@ -23,6 +23,7 @@ ALTER TABLE `account` ADD CONSTRAINT fk_account_role FOREIGN KEY (role_id) REFER
 CREATE TABLE category (
   id bigint NOT NULL PRIMARY KEY auto_increment,
   category_name VARCHAR(255) NOT NULL
+  `status` int NOT NULL
 );
 
 CREATE TABLE authors (
