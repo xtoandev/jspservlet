@@ -78,11 +78,37 @@
                 width: 100%;
             }
         }
+        .alert {
+            padding: 20px;
+            background-color: #f44336;
+            color: white;
+        }
+
+        .closebtn {
+            margin-left: 15px;
+            color: white;
+            font-weight: bold;
+            float: right;
+            font-size: 22px;
+            line-height: 20px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .closebtn:hover {
+            color: black;
+        }
+        .hide{
+            display: none;
+        }
     </style>
+
 </head>
 <body>
 <div id="login-form">
 
+
+    <h1>${$message}</h1>
 
     <form action="<c:url value='/login'/>" method="post">
         <div class="imgcontainer">
@@ -102,12 +128,13 @@
             </label>
         </div>
 
-        <div class="container" style="background-color:#f1f1f1">
-            <button type="button" class="cancelbtn">Cancel</button>
-            <span class="psw">Forgot <a href="#">password?</a></span>
-        </div>
+
     </form>
 </div>
+<script>
+    if("${message}"!="")
+        alert('${message}');
+</script>
 
 </body>
 </html>

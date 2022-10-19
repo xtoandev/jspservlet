@@ -11,6 +11,6 @@
     <title>Trang chu Admin</title>
 </head>
 <body>
-
+<h1>TRang chu admin</h1>
 </body>
 </html>

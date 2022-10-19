@@ -11,31 +11,46 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 @WebServlet(urlPatterns = {"/login"})
 public class LoginController extends HttpServlet {
     private IAccountService accountService = new AccountService();
 
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
         RequestDispatcher rd = request.getRequestDispatcher("views/login.jsp");
         rd.forward(request, response);
+    }
+
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        processRequest(request,response);
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
-        System.out.println("user"+ email+"pass: " + password);
+
         AccountModel user = new AccountModel();
-
-        user = accountService.getAccountByEmailAndPassword(email,password);
-
+        user = accountService.getAccountByEmailAndPassword(email,password);//tim user
+        HttpSession session = request.getSession();
+        //kiem tra dang nhap
         if(user != null && user.getStatus() == 1) {
-
-            response.sendRedirect(request.getContextPath()+"/home");
-        }else {
-            System.out.println("user"+ email+"pass: " + password);
+            session.setAttribute("user",user);//gan session
+            if(user.getRoleID() == 1)
+                response.sendRedirect(request.getContextPath()+"/admin-home");//tai khoan admin
+            else
+                response.sendRedirect(request.getContextPath()+"/home");//tai khoan thương
+        }else if(user != null && user.getStatus() != 1){
+            request.setAttribute("message", "Tài khoản đã bị khóa");//tai khoan bi khoa
+            processRequest(request, response);
+        }
+        else{
+            request.setAttribute("message", "Email hoặc mật khẩu không đúng");//sai mat khau or email
+            processRequest(request, response);
         }
 
     }
