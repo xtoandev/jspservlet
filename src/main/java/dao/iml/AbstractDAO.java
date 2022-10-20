@@ -87,7 +87,9 @@ public class AbstractDAO<T> implements GenericDAO<T> {
             connection = getConnection();
             connection.setAutoCommit(false);
             statement = connection.prepareStatement(sql);
+
             setParamenter(statement, parameters);
+            System.out.println(statement);
             statement.executeUpdate();
             connection.commit();
         }catch (SQLException e) {

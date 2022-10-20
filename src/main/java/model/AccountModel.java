@@ -1,6 +1,8 @@
 package model;
 
-public class AccountModel extends AbstractModel{
+import mapper.RowMapper;
+
+public class AccountModel extends RowMapper.AbstractModel {
 
     private String password;
     private Long roleID;

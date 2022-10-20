@@ -2,7 +2,6 @@ package service.iml;
 
 import dao.IAccountDAO;
 import dao.iml.AccountDAO;
-import model.AbstractModel;
 import model.AccountModel;
 import service.IAccountService;
 
