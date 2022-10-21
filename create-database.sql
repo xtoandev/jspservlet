@@ -1,4 +1,4 @@
-create database jspservlet;
+create database jspservlet CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci;
 
 use jspservlet;
 
@@ -22,29 +22,23 @@ ALTER TABLE `account` ADD CONSTRAINT fk_account_role FOREIGN KEY (role_id) REFER
 
 CREATE TABLE category (
   id bigint NOT NULL PRIMARY KEY auto_increment,
-  category_name VARCHAR(255) NOT NULL
-);
-
-CREATE TABLE authors (
-  id bigint NOT NULL PRIMARY KEY auto_increment,
-  authors_name VARCHAR(255) NOT NULL,
-  create_date Date NOT NULL,
+  category_name VARCHAR(255) NOT NULL,
   `status` int NOT NULL
 );
+
+
 CREATE TABLE book (
   id bigint NOT NULL PRIMARY KEY auto_increment,
   title VARCHAR(255) NOT NULL,
-  authour_id bigint NULL,
   category_id bigint NOT NULL,
   `description` TEXT NOT NULL,
   content TEXT NOT NULL,
   background VARCHAR(255) NOT NULL,
-  images TEXT NOT NULL,
   create_date Date NOT NULL,
   `status` int NOT NULL
 );
 
-ALTER TABLE book ADD CONSTRAINT fk_book_authour FOREIGN KEY (authour_id) REFERENCES authors(id);
+
 ALTER TABLE book ADD CONSTRAINT fk_book_category FOREIGN KEY (category_id) REFERENCES category(id);
 
 
@@ -57,10 +51,10 @@ insert into `account`(email ,`password` ,role_id ,full_name ,avatar ,`status`) v
 insert into `account`(email ,`password` ,role_id ,full_name ,avatar ,`status`) values('quocviet@gmail.com','123',2,'Nguyễn Quốc VIệt','https://i.ibb.co/bJ8LBz4/avatar-06.jpg',1);
 
 
-insert into category(category_name) values('Sách kinh tế');
-insert into category(category_name) values('Sách văn học');
-insert into category(category_name) values('Sách phát triển bản thân');
-insert into category(category_name) values('Tiểu thuyết');
-insert into category(category_name) values('Ngoại ngữ');
-insert into category(category_name) values('Sách nước ngoài');
+insert into category(category_name,`status`) values('Sách kinh tế',1);
+insert into category(category_name,`status`) values('Sách văn học',1);
+insert into category(category_name,`status`) values('Sách phát triển bản thân',1);
+insert into category(category_name,`status`) values('Tiểu thuyết',1);
+insert into category(category_name,`status`) values('Ngoại ngữ',1);
+insert into category(category_name,`status`) values('Sách nước ngoài',1);
 
