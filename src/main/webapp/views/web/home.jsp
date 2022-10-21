@@ -33,6 +33,7 @@
                     <li class="nav-item"><a class="nav-link" href="<c:url value='/logout' />"><i class="fas fa-user"></i> Đăng xuất</a></li>
                 </c:if>
                 <c:if test="${! not empty user}">
+                    <c:choose></c:choose>
                     <li class="nav-item"><a class="nav-link" href="<c:url value='/login' />"><i class="fas fa-user"></i> Đăng nhập</a></li>
                 </c:if>
 
