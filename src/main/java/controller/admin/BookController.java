@@ -29,8 +29,8 @@ public class BookController extends HttpServlet {
     private ICategoryDAO categoryDAO = new CategoryDAO();
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-
+        request.setCharacterEncoding("UTF-8");
+        response.setContentType("text/html;charset=UTF-8");
 
         String type = request.getParameter("action");
         System.out.println(type);
@@ -60,7 +60,8 @@ public class BookController extends HttpServlet {
 
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        request.setCharacterEncoding("UTF-8");
+        response.setContentType("text/html;charset=UTF-8");
         String type = request.getParameter("action");
         if(type.contains("save"))
             save(request, response);
@@ -69,12 +70,15 @@ public class BookController extends HttpServlet {
     }
 
     private void showNewForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        request.setCharacterEncoding("UTF-8");
+        response.setContentType("text/html;charset=UTF-8");
         request.setAttribute("categories",categoryDAO.findAll());
         RequestDispatcher rd = request.getRequestDispatcher("views/admin/book/created.jsp");
         rd.forward(request, response);
     }
     private void showEditForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
+        response.setContentType("text/html;charset=UTF-8");
         request.setAttribute("categories",categoryDAO.findAll());
         Long id = Long.parseLong(request.getParameter("id"));
         BookModel book = bookService.findOne(id);
@@ -84,11 +88,15 @@ public class BookController extends HttpServlet {
         rd.forward(request, response);
     }
     private void delete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
+        response.setContentType("text/html;charset=UTF-8");
         Long id = Long.parseLong(request.getParameter("id"));
         bookService.delete(id);
         response.sendRedirect(request.getContextPath() + "/admin-book?action=list");
     }
     private void save(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
+        response.setContentType("text/html;charset=UTF-8");
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Date date = new Date();
 
@@ -106,6 +114,8 @@ public class BookController extends HttpServlet {
         response.sendRedirect(request.getContextPath() + "/admin-book?action=list");
     }
     private void update(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
+        response.setContentType("text/html;charset=UTF-8");
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
         Long id = Long.parseLong(request.getParameter("id"));

@@ -13,7 +13,7 @@
   Time: 2:36 PM
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -81,7 +81,7 @@
 
     <div id="content-wrapper">
 
-        <div class="card mb-3" style="width: 90%;margin-left: 10px">
+        <div class="card mb-4" style="width: 95%;margin-left: 10px">
             <div class="card-header">
                 <i class="fas fa-table"></i>
                 Danh sách Book
@@ -90,9 +90,10 @@
 
             <div class="card-body">
                 <div class="table">
-                    <table class="table table-bordered" width="80%" cellspacing="0">
+                    <table class="table table-bordered" width="100%" cellspacing="0">
                         <thead>
                         <tr>
+                            <th>STT</th>
                             <th>Tiêu đề</th>
                             <th>Thể loại</th>
                             <th>Mô tả</th>
@@ -108,6 +109,7 @@
 
                             <c:forEach items="${data}" var="i" varStatus="loop">
                                 <tr>
+                                    <th>${loop.index + 1}</th>
                                     <th>${i.title}</th>
                                     <th>${i.categoryName}</th>
                                     <th>${i.description}</th>
@@ -121,14 +123,14 @@
                                         <c:if test="${i.status == 1}">
                                             <span class="status--process">Hoạt động</span>
                                         </c:if>
-                                        <c:if test="${o.trangThai == 0}">
+                                        <c:if test="${i.status == 0}">
                                             <span class="status--denied">Khóa</span>
                                         </c:if>
                                     </th>
                                     <th>
-                                        <a href="<c:url value='/admin-book?action=edit&id=${i.id}'/>">Sửa  </a>
+                                        <a href="<c:url value='/admin-book?action=edit&id=${i.id}'/>">Sửa &nbsp;</a>
 
-                                        <a href="<c:url value='/admin-book?action=delete&id=${i.id}'/>">  Xóa</a>
+                                        <a href="<c:url value='/admin-book?action=delete&id=${i.id}'/>">Xóa &nbsp;</a>
                                     </th>
                                 </tr>
                             </c:forEach>
