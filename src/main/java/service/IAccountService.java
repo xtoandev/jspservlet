@@ -1,6 +1,5 @@
 package service;
 
-import model.AbstractModel;
 import model.AccountModel;
 
 public interface IAccountService {

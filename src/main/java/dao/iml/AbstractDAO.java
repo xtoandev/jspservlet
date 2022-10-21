@@ -12,7 +12,7 @@ public class AbstractDAO<T> implements GenericDAO<T> {
     public Connection getConnection() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            String url = "jdbc:mysql://localhost:3306/jspservlet";
+            String url = "jdbc:mysql://localhost:3306/jspservlet?characterEncoding=UTF8";
             String user = "root";
             String password = "";
 
@@ -44,9 +44,15 @@ public class AbstractDAO<T> implements GenericDAO<T> {
             return null;
         }finally {
             try {
-                conn.close();
-                statement.close();
-                resultSet.close();
+                if (conn != null) {
+                    conn.close();
+                }
+                if (statement != null) {
+                    statement.close();
+                }
+                if (resultSet != null) {
+                    resultSet.close();
+                }
             } catch (SQLException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
@@ -87,7 +93,9 @@ public class AbstractDAO<T> implements GenericDAO<T> {
             connection = getConnection();
             connection.setAutoCommit(false);
             statement = connection.prepareStatement(sql);
+
             setParamenter(statement, parameters);
+            System.out.println(statement);
             statement.executeUpdate();
             connection.commit();
         }catch (SQLException e) {
