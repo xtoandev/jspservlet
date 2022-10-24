@@ -1,36 +1,42 @@
 package controller.admin;
 
-import dao.ICategoryDAO;
-import dao.iml.CategoryDAO;
+
 import model.BookModel;
+import model.CategoryModel;
 import service.IBookService;
+import service.ICategoryService;
 import service.iml.BookService;
+import service.iml.CategoryService;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.Part;
 import java.io.IOException;
-import java.lang.reflect.Array;
+import java.io.InputStream;
+import java.io.PrintWriter;
+import java.nio.file.Path;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
-@WebServlet(urlPatterns = {"/admin-book"})
+@WebServlet(urlPatterns = {"/admin/book"})
+@MultipartConfig
 public class BookController extends HttpServlet {
+    private String  PATH_IMAGE = "E:/";
     private static final long serialVersionUID = 1L;
 
     private IBookService bookService = new BookService();
-    private ICategoryDAO categoryDAO = new CategoryDAO();
+    private ICategoryService categoryService = new CategoryService();
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
-        response.setContentType("text/html;charset=UTF-8");
+        response.setCharacterEncoding("UTF-8");
+
 
         String type = request.getParameter("action");
         System.out.println(type);
@@ -48,7 +54,7 @@ public class BookController extends HttpServlet {
                 case "list":
                     List<BookModel> data = bookService.findAll();
                     request.setAttribute("data",data);
-                    RequestDispatcher rd = request.getRequestDispatcher("views/admin/book/index.jsp");
+                    RequestDispatcher rd = request.getRequestDispatcher("/views/admin/book/index.jsp");
                     rd.forward(request, response);
                     break;
 
@@ -61,7 +67,7 @@ public class BookController extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
-        response.setContentType("text/html;charset=UTF-8");
+        response.setCharacterEncoding("UTF-8");
         String type = request.getParameter("action");
         if(type.contains("save"))
             save(request, response);
@@ -71,20 +77,20 @@ public class BookController extends HttpServlet {
 
     private void showNewForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
-        response.setContentType("text/html;charset=UTF-8");
-        request.setAttribute("categories",categoryDAO.findAll());
-        RequestDispatcher rd = request.getRequestDispatcher("views/admin/book/created.jsp");
+        response.setCharacterEncoding("UTF-8");
+        request.setAttribute("categories",categoryService.findAll());
+        RequestDispatcher rd = request.getRequestDispatcher("/views/admin/book/created.jsp");
         rd.forward(request, response);
     }
     private void showEditForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         response.setContentType("text/html;charset=UTF-8");
-        request.setAttribute("categories",categoryDAO.findAll());
+        request.setAttribute("categories",categoryService.findAll());
         Long id = Long.parseLong(request.getParameter("id"));
         BookModel book = bookService.findOne(id);
         request.setAttribute("book",book);
 
-        RequestDispatcher rd = request.getRequestDispatcher("views/admin/book/created.jsp");
+        RequestDispatcher rd = request.getRequestDispatcher("/views/admin/book/created.jsp");
         rd.forward(request, response);
     }
     private void delete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -92,7 +98,7 @@ public class BookController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         Long id = Long.parseLong(request.getParameter("id"));
         bookService.delete(id);
-        response.sendRedirect(request.getContextPath() + "/admin-book?action=list");
+        response.sendRedirect(request.getContextPath() + "/admin/book?action=list");
     }
     private void save(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
@@ -101,42 +107,63 @@ public class BookController extends HttpServlet {
         Date date = new Date();
 
         BookModel book = new BookModel();
+        CategoryModel category = new CategoryModel();
         book.setTitle(request.getParameter("title"));
-        book.setCategoryID(Long.parseLong(request.getParameter("categoryID")));
+        //category.setId(Long.parseLong(request.getParameter("categories")));
+        book.setCategory(category);
         book.setDescription(request.getParameter("description"));
         book.setContent(request.getParameter("content"));
+        book.setPrice(request.getParameter("price"));
         //book.setBackground(request.getParameter("background"));
         book.setBackground("upload/anhnen1.jpg");
         book.setStatus(1);
         book.setCreateDate(dateFormat.format(date));
+        System.out.println(request.getParameter("background"));
+        InputStream inputStream = null; // input stream of the upload file
 
-        bookService.save(book);
-        response.sendRedirect(request.getContextPath() + "/admin-book?action=list");
-    }
-    private void update(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.setCharacterEncoding("UTF-8");
-        response.setContentType("text/html;charset=UTF-8");
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        // obtains the upload file part in this multipart request
+        //Part filePart = request.getPart("background");
+        //if (filePart != null) {
+//            // prints out some information for debugging
+//            System.out.println(filePart.getName());
+//            System.out.println(filePart.getSize());
+//            System.out.println(filePart.getContentType());
+//
+//            // obtains input stream of the upload file
+//            inputStream = filePart.getInputStream();
+       //}
 
-        Long id = Long.parseLong(request.getParameter("id"));
-        BookModel old = bookService.findOne(id);
 
-        BookModel book = new BookModel();
-        book.setId(id);
+            //bookService.save(book);
+            response.sendRedirect(request.getContextPath() + "/admin/book?action=list");
+        }
+        private void update (HttpServletRequest request, HttpServletResponse response) throws
+        ServletException, IOException {
+            request.setCharacterEncoding("UTF-8");
+            response.setContentType("text/html;charset=UTF-8");
+            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
-        book.setTitle(request.getParameter("title"));
-        book.setCategoryID(Long.parseLong(request.getParameter("categoryID")));
-        book.setDescription(request.getParameter("description"));
-        book.setContent(request.getParameter("content"));
-        //book.setBackground(request.getParameter("background"));
-        book.setBackground("upload/anhnen1.jpg");
-        book.setStatus(1);
+            Long id = Long.parseLong(request.getParameter("id"));
+            BookModel old = bookService.findOne(id);
 
-        book.setCreateDate(old.getCreateDate());
+            BookModel book = new BookModel();
+            CategoryModel category = new CategoryModel();
+            book.setId(id);
 
-        bookService.update(book);
-        response.sendRedirect(request.getContextPath() + "/admin-book?action=list");
-    }
+            book.setTitle(request.getParameter("title"));
+            category.setId(Long.parseLong(request.getParameter("categoryID")));
+            book.setCategory(category);
+            book.setDescription(request.getParameter("description"));
+            book.setContent(request.getParameter("content"));
+            book.setPrice(request.getParameter("price"));
+            //book.setBackground(request.getParameter("background"));
+            book.setBackground("upload/anhnen1.jpg");
+            book.setStatus(1);
+            book.setCreateDate(old.getCreateDate());
+
+            bookService.update(book);
+            response.sendRedirect(request.getContextPath() + "/admin/book?action=list");
+        }
 
 
 }

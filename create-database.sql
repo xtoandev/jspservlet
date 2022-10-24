@@ -1,4 +1,4 @@
-create database jspservlet CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci;
+create database jspservlet CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 use jspservlet;
 
@@ -33,6 +33,7 @@ CREATE TABLE book (
   category_id bigint NOT NULL,
   `description` TEXT NOT NULL,
   content TEXT NOT NULL,
+  price DECIMAL(10,3),
   background VARCHAR(255) NOT NULL,
   create_date Date NOT NULL,
   `status` int NOT NULL

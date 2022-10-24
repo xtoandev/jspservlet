@@ -13,14 +13,12 @@ public class CategoryMapper implements RowMapper<CategoryModel>{
     DateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy");
     @Override
     public CategoryModel mapRow(ResultSet rs) {
-        CategoryModel cate = new CategoryModel();
+        CategoryModel category = new CategoryModel();
         try {
-            cate.setId(rs.getLong("id"));
-            cate.setCategoryName(rs.getString("category_name"));
-
-            cate.setStatus(rs.getInt("status"));
-
-            return cate;
+            category.setId(rs.getLong("id"));
+            category.setCategoryName(rs.getString("category_name"));
+            category.setStatus(rs.getInt("status"));
+            return category;
         } catch (SQLException e1) {
             e1.printStackTrace();
             return null;

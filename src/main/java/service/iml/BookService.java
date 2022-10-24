@@ -9,7 +9,12 @@ import java.util.List;
 
 public class BookService implements IBookService {
 
-    private IBookDAO bookDAO = new BookDAO();
+    private IBookDAO bookDAO;
+
+    public BookService() {
+        bookDAO = new BookDAO();
+    }
+
     @Override
     public List<BookModel> findAll() {
         return bookDAO.findAll();

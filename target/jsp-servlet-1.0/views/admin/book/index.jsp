@@ -13,7 +13,7 @@
   Time: 2:36 PM
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -43,18 +43,17 @@
 
 <nav class="navbar navbar-expand navbar-dark bg-dark static-top">
 
-    <a class="navbar-brand mr-1" href="<c:url value='/admin-home'/>">Admin</a>
+    <a class="navbar-brand mr-1" href="<c:url value='/admin/home'/>">Admin</a>
 
     <!-- Navbar -->
-    <ul class="navbar-nav ml-auto ml-md-0">
-
+    <ul class="navbar-nav ml-auto">
         <li class="nav-item dropdown no-arrow">
             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <i class="fas fa-user-circle fa-fw"></i>
+                ${user.fullName}
             </a>
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">Logout</a>
+                <a class="dropdown-item" href="<c:url value='/logout'/>" >Logout</a>
             </div>
         </li>
     </ul>
@@ -66,14 +65,14 @@
     <!-- Sidebar -->
     <ul class="sidebar navbar-nav">
         <li class="nav-item active">
-            <a class="nav-link" href="<c:url value='/admin-home'/>">
+            <a class="nav-link" href="<c:url value='/admin/home'/>">
                 <i class="fas fa-fw fa-tachometer-alt"></i>
                 <span>Dashboard</span>
             </a>
         </li>
 
         <li class="nav-item">
-            <a class="nav-link" href="<c:url value='/admin-book?action=list'/>">
+            <a class="nav-link" href="<c:url value='/admin/book?action=list'/>">
                 <i class="fas fa-fw fa-chart-area"></i>
                 <span>Manager Book</span></a>
         </li>
@@ -85,7 +84,7 @@
             <div class="card-header">
                 <i class="fas fa-table"></i>
                 Danh sách Book
-                <a style="float: right" class="btn btn-primary col-md-1" href="<c:url value='/admin-book?action=create' />"> Tạo mới</a>
+                <a style="float: right" class="btn btn-primary col-md-1" href="<c:url value='/admin/book?action=create' />"> Tạo mới</a>
             </div>
 
             <div class="card-body">
@@ -111,7 +110,7 @@
                                 <tr>
                                     <th>${loop.index + 1}</th>
                                     <th>${i.title}</th>
-                                    <th>${i.categoryName}</th>
+                                    <th>${i.category.categoryName}</th>
                                     <th>${i.description}</th>
                                     <th>${i.content}</th>
                                     <th>
@@ -128,9 +127,9 @@
                                         </c:if>
                                     </th>
                                     <th>
-                                        <a href="<c:url value='/admin-book?action=edit&id=${i.id}'/>">Sửa &nbsp;</a>
+                                        <a href="<c:url value='/admin/book?action=edit&id=${i.id}'/>">Sửa &nbsp;</a>
 
-                                        <a href="<c:url value='/admin-book?action=delete&id=${i.id}'/>">Xóa &nbsp;</a>
+                                        <a href="<c:url value='/admin/book?action=delete&id=${i.id}'/>">Xóa &nbsp;</a>
                                     </th>
                                 </tr>
                             </c:forEach>

@@ -31,13 +31,14 @@ public class BookDAO extends AbstractDAO<BookModel> implements IBookDAO {
 
     @Override
     public Long save(BookModel book) {
-        String sql = "insert into book (title, category_id, description, content, background, create_date, status)" +
-                "values(?,?,?,?,?,?,?) ";
+        String sql = "insert into book (title, category_id, description, content, background, price,create_date, `status`)" +
+                "values(?,?,?,?,?,?,?,?) ";
         return insert(sql,book.getTitle()
-                , book.getCategoryID()
+                , book.getCategory().getId()
                 , book.getDescription()
                 , book.getContent()
                 , book.getBackground()
+                , book.getPrice()
                 , book.getCreateDate()
                 , book.getStatus());
     }
@@ -51,13 +52,15 @@ public class BookDAO extends AbstractDAO<BookModel> implements IBookDAO {
                 + ", description = ? "
                 + ", content = ? "
                 + ", background = ? "
+                + ", price = ? "
                 + ", create_date = ?"
                 + ", status = ?" +
                 " WHERE id = ? ; ";
         update(sql,book.getTitle()
-                , book.getCategoryID()
+                , book.getCategory().getId()
                 , book.getDescription()
                 , book.getContent()
+                , book.getPrice()
                 , book.getBackground()
                 , book.getCreateDate()
                 , book.getStatus()

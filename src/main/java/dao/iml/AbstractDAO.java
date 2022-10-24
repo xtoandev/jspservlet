@@ -133,6 +133,7 @@ public class AbstractDAO<T> implements GenericDAO<T> {
             connection.setAutoCommit(false);
             statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             setParamenter(statement, parameters);
+            System.out.println(statement);
             statement.executeUpdate();
             resultSet = statement.getGeneratedKeys();
             if(resultSet.next()) {

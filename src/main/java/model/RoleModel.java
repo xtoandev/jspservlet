@@ -1,8 +1,7 @@
 package model;
 
-import mapper.RowMapper;
 
-public class RoleModel extends RowMapper.AbstractModel {
+public class RoleModel extends AbstractModel {
     String role_name;
 
     public String getRole_name() {

@@ -7,9 +7,14 @@ import service.IAccountService;
 
 public class AccountService implements IAccountService {
 
-    private IAccountDAO dao = new AccountDAO();
+    private IAccountDAO accountDAO;
+
+    public AccountService() {
+        accountDAO = new AccountDAO();
+    }
+
     @Override
     public AccountModel getAccountByEmailAndPassword(String email, String password) {
-        return dao.getAccountByEmailAndPassword(email,password);
+        return accountDAO.getAccountByEmailAndPassword(email,password);
     }
 }

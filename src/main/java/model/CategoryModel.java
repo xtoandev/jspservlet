@@ -1,8 +1,7 @@
 package model;
 
-import mapper.RowMapper;
 
-public class CategoryModel extends RowMapper.AbstractModel {
+public class CategoryModel extends AbstractModel {
 
     private String categoryName;
 

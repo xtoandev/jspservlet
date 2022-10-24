@@ -13,7 +13,7 @@
   Time: 2:36 PM
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -43,18 +43,18 @@
 
 <nav class="navbar navbar-expand navbar-dark bg-dark static-top">
 
-    <a class="navbar-brand mr-1" href="<c:url value='/admin-home'/>">Admin</a>
+    <a class="navbar-brand mr-1" href="<c:url value='/admin/home'/>">Admin</a>
 
     <!-- Navbar -->
-    <ul class="navbar-nav ml-auto ml-md-0">
-
+    <!-- Navbar -->
+    <ul class="navbar-nav ml-auto">
         <li class="nav-item dropdown no-arrow">
             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <i class="fas fa-user-circle fa-fw"></i>
+                ${user.fullName}
             </a>
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">Logout</a>
+                <a class="dropdown-item" href="<c:url value='/logout'/>" >Logout</a>
             </div>
         </li>
     </ul>
@@ -66,14 +66,14 @@
     <!-- Sidebar -->
     <ul class="sidebar navbar-nav">
         <li class="nav-item active">
-            <a class="nav-link" href="<c:url value='/admin-home'/>">
+            <a class="nav-link" href="<c:url value='/admin/home'/>">
                 <i class="fas fa-fw fa-tachometer-alt"></i>
                 <span>Dashboard</span>
             </a>
         </li>
 
         <li class="nav-item">
-            <a class="nav-link" href="<c:url value='/admin-book?action=list'/>">
+            <a class="nav-link" href="<c:url value='/admin/book?action=list'/>">
                 <i class="fas fa-fw fa-chart-area"></i>
                 <span>Manager Book</span></a>
         </li>
@@ -85,10 +85,10 @@
             <div class="card-header">BOOK</div>
             <div class="card-body">
                 <c:if test="${not empty book}">
-                    <form method="post" action="./admin-book?action=update&id=${book.id}">
+                    <form method="post" action="/admin/book?action=update&id=${book.id}" enctype="multipart/form-data">
                 </c:if>
                 <c:if test="${! not empty book}">
-                    <form method="post" action="./admin-book?action=save">
+                    <form method="post" action="/admin/book?action=save">
                 </c:if>
 
                     <div class="form-group">
@@ -99,14 +99,13 @@
                     </div>
                     <div class="form-group">
                         <div class="form-label-group">
-                            <input hidden id="category" type="text" name="categoryID" id="inputcate" class="form-control" placeholder="Enter cate" value="${book.categoryID}" required="required">
-
+                            <input hidden id="category" type="text" name="categoryID" id="inputcate" class="form-control" placeholder="Enter cate" value="${book.category.id}" required="required">
                         </div>
                     </div>
 
                     <div class="form-group">
                         <div class="form-label-group">
-                            <select  required name="maChuDe" id="select" class="form-control" onchange="myFunction(event)">
+                            <select  required name="categories" id="select" class="form-control" onchange="myFunction(event)">
                                 <c:if test="${empty book.categoryID}">
                                     <option value="">Select category</option>
                                     <c:forEach var="item" items="${categories}">
@@ -138,7 +137,16 @@
                             <label for="inputcontent">Content: </label>
                         </div>
                     </div>
-
+                    <div class="form-group">
+                        <div class="form-label-group">
+                            <input type="text" name="price" id="inputprice" class="form-control" placeholder="Enter price" value="${book.price}" required="required">
+                            <label for="inputprice">Price: </label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleFormControlFile1">Example file input</label>
+                        <input type="file" name="background" class="form-control-file" id="exampleFormControlFile1">
+                    </div>
 
 
 

@@ -44,7 +44,7 @@ public class LoginController extends HttpServlet {
             session.setAttribute("role",user.getRoleID());
 
             if(user.getRoleID() == 1)
-                response.sendRedirect(request.getContextPath()+"/admin-home");//tai khoan admin
+                response.sendRedirect(request.getContextPath()+"/admin/home");//tai khoan admin
             else
                 response.sendRedirect(request.getContextPath()+"/home");//tai khoan thương
         }else if(user != null && user.getStatus() != 1){

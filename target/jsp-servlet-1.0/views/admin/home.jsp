@@ -35,7 +35,7 @@
 
 <nav class="navbar navbar-expand navbar-dark bg-dark static-top">
 
-    <a class="navbar-brand mr-1" href="<c:url value='/admin-home'/>">Admin</a>
+    <a class="navbar-brand mr-1" href="<c:url value='/admin/home'/>">Admin</a>
 
 
 
@@ -59,14 +59,14 @@
     <!-- Sidebar -->
     <ul class="sidebar navbar-nav">
         <li class="nav-item active">
-            <a class="nav-link" href="<c:url value='/admin-home'/>">
+            <a class="nav-link" href="<c:url value='/admin/home'/>">
                 <i class="fas fa-fw fa-tachometer-alt"></i>
                 <span>Dashboard</span>
             </a>
         </li>
 
         <li class="nav-item">
-            <a class="nav-link" href="<c:url value='admin-book?action=list'/>">
+            <a class="nav-link" href="<c:url value='/admin/book?action=list'/>">
                 <i class="fas fa-fw fa-chart-area"></i>
                 <span>Manager Book</span></a>
         </li>
